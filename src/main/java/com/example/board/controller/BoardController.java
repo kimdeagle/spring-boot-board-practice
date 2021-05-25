@@ -34,7 +34,7 @@ public class BoardController {
 	}
 	
 	@GetMapping({"/get", "/modify"})
-	public void get(String bno, Model model) {
+	public void get(@ModelAttribute("pagination") Pagination p, String bno, Model model) {
 		model.addAttribute("board", boardService.get(bno));
 	}
 	
@@ -53,10 +53,11 @@ public class BoardController {
 	}
 	
 	@PostMapping("/modify")
-	public String modify(BoardDTO board, RedirectAttributes rttr) {
+	public String modify(Pagination p, BoardDTO board, RedirectAttributes rttr) {
 		
 		if (boardService.modify(board) == 1) {
 			rttr.addFlashAttribute("result", "수정 성공");
+			rttr.addFlashAttribute("pagination", p);
 		}
 		
 		return "redirect:/board/list";

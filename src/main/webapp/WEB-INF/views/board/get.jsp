@@ -46,9 +46,11 @@
 				</div>
 			</div>
 			<div class="panel-footer text-right">
-				<button class="btn btn-success" onclick="location.href='/board/modify?bno=${board.bno}'">수정</button>
-				<button id="removeBtn" class="btn btn-danger">삭제</button>
-				<button class="btn btn-default" onclick="location.href='/board/list'">목록</button>
+				<c:if test="${board.userid == userid}">
+					<button class="btn btn-success" onclick="location.href='/board/modify?bno=${board.bno}&pageNum=${pagination.pageNum}&amount=${pagination.amount}&type=${pagination.type}&keyword=${pagination.keyword}'">수정</button>
+					<button id="removeBtn" class="btn btn-danger">삭제</button>				
+				</c:if>
+				<button class="btn btn-default" onclick="location.href='/board/list?pageNum=${pagination.pageNum}&amount=${pagination.amount}&type=${pagination.type}&keyword=${pagination.keyword}'">목록</button>
 			</div>
 		</div>
 	

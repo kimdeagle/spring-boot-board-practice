@@ -42,9 +42,7 @@
 					<button id ="listBtn" class="btn btn-default">목록</button>
 				</div>
 				
-				<%-- <input type="hidden" name="userid" value="${userid}"> --%>
-				<!-- test -->
-				<input type="hidden" name="userid" value="test">
+				<input type="hidden" name="userid" value="${userid}">
 			</form>
 		</div>
 

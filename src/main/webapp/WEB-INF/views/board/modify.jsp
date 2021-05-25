@@ -40,9 +40,16 @@
 					<input type="hidden" name="bno" value="${board.bno}">
 				</div>
 				<div class="panel-footer text-right">
-					<button type="submit" class="btn btn-success">수정</button>
+					<c:if test="${board.userid == userid}">
+						<button type="submit" class="btn btn-success">수정</button>					
+					</c:if>
 					<button id="listBtn" class="btn btn-default">목록</button>
 				</div>
+				
+				<input type="hidden" name="pageNum" value="${pagination.pageNum}">
+				<input type="hidden" name="amount" value="${pagination.amount}">
+				<input type="hidden" name="type" value="${pagination.type}">
+				<input type="hidden" name="keyword" value="${pagination.keyword}">
 			</form>
 		</div>
 
@@ -53,7 +60,7 @@
 			$("#listBtn").click(function(e) {
 				e.preventDefault();
 				
-				self.location = "/board/list";
+				self.location = "/board/list?pageNum=${pagination.pageNum}&amount=${pagination.amount}&type=${pagination.type}&keyword=${pagination.keyword}";
 			});
 		});
 	</script>

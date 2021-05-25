@@ -43,7 +43,7 @@
 						<c:forEach items="${list}" var="board">
 						<tr>
 							<td width="15%">${board.bno}</td>
-							<td width="30%"><a href="/board/get?bno=${board.bno}">${board.title}</a></td>
+							<td width="30%"><a href="/board/get?bno=${board.bno}&pageNum=${pagination.pageNum}&amount=${pagination.amount}&type=${pagination.type}&keyword=${pagination.keyword}">${board.title}</a></td>
 							<td width="25%"><fmt:formatDate pattern="yyyy/MM/dd" value="${board.regdate}"/></td>
 							<td width="15%">${board.readcnt}</td>
 							<td width="15%">${board.userid}</td>
@@ -55,29 +55,48 @@
 			<div class="panel-footer text-right">
 				<nav>
 					<ul class="pager" style="margin: 5px;">
-						<li><a href="/board/list">처음으로</a></li>
-						<li><a href="/board/list?pageNum=${pagination.totalPageCnt}&amount=${pagination.amount}">끝으로</a></li>
+						<c:if test="${not empty pagination.keyword}">
+							<li><a href="/board/list?type=${pagination.type}&keyword=${pagination.keyword}">처음으로</a></li>
+							<li><a href="/board/list?pageNum=${pagination.totalPageCnt}&amount=${pagination.amount}&type=${pagination.type}&keyword=${pagination.keyword}">끝으로</a></li>						
+						</c:if>
+						<c:if test="${empty pagination.keyword}">
+							<li><a href="/board/list">처음으로</a></li>
+							<li><a href="/board/list?pageNum=${pagination.totalPageCnt}&amount=${pagination.amount}">끝으로</a></li>						
+						</c:if>
 					</ul>
 				</nav>
 				<nav>
 					<ul class="pagination">
-						<c:if test="${pagination.prev}">
-							<li><a href="/board/list?pageNum=${pagination.startPage - 1}&amount=${pagination.amount}" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>						
+						<c:if test="${not empty pagination.keyword}">
+							<c:if test="${pagination.prev}">
+								<li><a href="/board/list?pageNum=${pagination.startPage - 1}&amount=${pagination.amount}" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>						
+							</c:if>
+							<c:forEach var="num" begin="${pagination.startPage}" end="${pagination.endPage}">
+								<li class="${pagination.pageNum == num ? 'active' : ''}"><a href="/board/list?pageNum=${num}&amount=${pagination.amount}&type=${pagination.type}&keyword=${pagination.keyword}">${num}</a></li>
+							</c:forEach>
+							<c:if test="${pagination.next}">
+								<li><a href="/board/list?pageNum=${pagination.endPage + 1}&amount=${pagination.amount}&type=${pagination.type}&keyword=${pagination.keyword}" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
+							</c:if>
 						</c:if>
-						<c:forEach var="num" begin="${pagination.startPage}" end="${pagination.endPage}">
-							<li class="${pagination.pageNum == num ? 'active' : ''}"><a href="/board/list?pageNum=${num}&amount=${pagination.amount}">${num}</a></li>
-						</c:forEach>
-						<c:if test="${pagination.next}">
-							<li><a href="/board/list?pageNum=${pagination.endPage + 1}&amount=${pagination.amount}" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
+						<c:if test="${empty pagination.keyword}">						
+							<c:if test="${pagination.prev}">
+								<li><a href="/board/list?pageNum=${pagination.startPage - 1}&amount=${pagination.amount}" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>						
+							</c:if>
+							<c:forEach var="num" begin="${pagination.startPage}" end="${pagination.endPage}">
+								<li class="${pagination.pageNum == num ? 'active' : ''}"><a href="/board/list?pageNum=${num}&amount=${pagination.amount}">${num}</a></li>
+							</c:forEach>
+							<c:if test="${pagination.next}">
+								<li><a href="/board/list?pageNum=${pagination.endPage + 1}&amount=${pagination.amount}" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
+							</c:if>
 						</c:if>
 					</ul>
 				</nav>
 				<div class="form-inline">
 					<select class="form-control" id="type" name="type">
-						<option value="T">제목</option>
-						<option value="C">내용</option>
-						<option value="TC">제목+내용</option>
-						<option value="U">작성자</option>
+						<option value="T" ${pagination.type == 'T' ? 'selected' : ''}>제목</option>
+						<option value="C" ${pagination.type == 'C' ? 'selected' : ''}>내용</option>
+						<option value="TC" ${pagination.type == 'TC' ? 'selected' : ''}>제목+내용</option>
+						<option value="U" ${pagination.type == 'U' ? 'selected' : ''}>작성자</option>
 					</select>
 					<input type="text" class="form-control" id="keyword" name="keyword" value="${pagination.keyword}">
 					<button class="btn btn-default" id="searchBtn">검색</button>
@@ -96,15 +115,27 @@
 			}
 			
 			$("#searchBtn").click(function(e) {
-				//alert($("#type").val());
-				var type = $("#type").val();
-				var keyword = $("#keyword").val();
-				
-				self.location = "/board/list?pageNum=${pagination.pageNum}&amount=${pagination.amount}&type=" + type + "&keyword=" + keyword;
-				
+				search();
 			});
 			
+			$("#keyword").keyup(function(e) {
+				if (event.keyCode == 13) {
+					search();
+				}
+			});
 			
+			function search() {
+				var type = $("#type").val();
+				var keyword = $("#keyword").val().trim();
+				
+				if (keyword == null || keyword == "") {
+					alert("검색어를 입력해주세요.");
+					$("#keyword").val("").focus();
+					return;
+				}
+				
+				self.location = "/board/list?pageNum=${pagination.pageNum}&amount=${pagination.amount}&type=" + type + "&keyword=" + keyword;
+			}
 			
 		});
 	</script>
