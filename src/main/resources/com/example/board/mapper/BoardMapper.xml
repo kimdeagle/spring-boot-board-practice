@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.board.mapper.BoardMapper">
+	
+	<sql id="search">
+		<where>
+			<if test="type == 'T'.toString()">
+				title like concat('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'C'.toString()">
+				content like concat('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'TC'.toString()">
+				title like concat('%', #{keyword}, '%') or content like concat('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'U'.toString()">
+				userid like concat('%', #{keyword}, '%')
+			</if>
+		</where>
+	</sql>
+	
+	<select id="getList" parameterType="com.example.board.domain.Pagination" resultType="com.example.board.domain.BoardDTO">
+		select
+			*
+		from
+			tbl_board
+		<include refid="search"></include>
+		order by
+			bno desc
+		limit
+			#{startIdx}, #{amount}
+	</select>
+	
+	<select id="get" resultType="com.example.board.domain.BoardDTO">
+		select * from tbl_board where bno = #{bno}
+	</select>
+	
+	<insert id="register">
+		insert into tbl_board
+			(title, content, userid)
+		values
+			(#{title}, #{content}, #{userid})
+	</insert>
+	
+	<update id="modify">
+		update
+			tbl_board
+		set
+			title = #{title},
+			content = #{content},
+			updatedate = now()
+		where
+			bno = #{bno}
+	</update>
+	
+	<delete id="remove">
+		delete from tbl_board where bno = #{bno}
+	</delete>
+	
+	<select id="getTotalBoardCnt" resultType="int">
+		select
+			count(*)
+		from
+			tbl_board
+		<include refid="search"></include>
+			
+	</select>
+	
+</mapper>
