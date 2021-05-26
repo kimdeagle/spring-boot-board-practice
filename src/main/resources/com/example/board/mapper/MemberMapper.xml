@@ -10,4 +10,25 @@
 		where
 			userid = #{userid} and userpw = #{userpw}
 	</select>
+	
+	<insert id="join">
+		insert into tbl_member
+			(userid, userpw, name, email)
+		values
+			<if test="email != ''">
+				(#{userid}, #{userpw}, #{name}, #{email})
+			</if>
+			<if test="email == ''">
+				(#{userid}, #{userpw}, #{name}, null)
+			</if>
+	</insert>
+	
+	<select id="existUserId" resultType="int">
+		select
+			count(*)
+		from
+			tbl_member
+		where
+			userid = #{userid}
+	</select>
 </mapper>

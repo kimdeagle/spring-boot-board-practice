@@ -11,12 +11,19 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <div class="well well-lg">
+	<h2 class="pull-left">Board</h2>
 	<c:if test="${empty userid}">
-		<h2>Board <button class="btn btn-default pull-right" onclick="location.href='/login'">Login</button></h2>	
+		<div class="pull-right">
+			<button class="btn btn-default" onclick="location.href='/login'">Login</button>
+			<button class="btn btn-default" onclick="location.href='/join'">Join</button>
+		</div>
 	</c:if>
 	<c:if test="${not empty userid}">
-		<h2>Board <button id="logoutBtn" class="btn btn-default pull-right">Logout</button></h2>	
+		<div class="pull-right">
+			<button id="logoutBtn" class="btn btn-default">Logout</button>
+		</div>
 	</c:if>
+	<div class="clearfix"></div>
 </div>
 
 <script type="text/javascript">

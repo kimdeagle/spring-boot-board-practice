@@ -17,4 +17,14 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.isMember(member) == 1 ? true : false;
 	}
 	
+	@Override
+	public int join(MemberDTO member) {
+		return memberMapper.join(member);
+	}
+	
+	@Override
+	public boolean existUserId(String userid) {
+		return memberMapper.existUserId(userid) == 1;
+	}
+	
 }

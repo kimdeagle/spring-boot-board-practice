@@ -25,8 +25,16 @@
 
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				게시판 목록
-				<button class="btn btn-primary btn-sm pull-right" onclick="location.href='/board/register'">작성</button>
+				<h3>게시판 목록
+				<c:if test="${not empty pagination.keyword}">
+					<small>(검색 결과 : ${pagination.totalBoardCnt}건)</small>
+				</c:if>
+				<c:if test="${empty pagination.keyword}">
+					<small>(총 게시글 : ${pagination.totalBoardCnt}건)</small>					
+				</c:if>
+					<button class="btn btn-primary pull-right" onclick="location.href='/board/register'">작성</button>
+				</h3>
+				<div class="clearfix"></div>
 			</div>
 			<div class="panel-body">
 				<table class="table">
@@ -100,6 +108,9 @@
 					</select>
 					<input type="text" class="form-control" id="keyword" name="keyword" value="${pagination.keyword}">
 					<button class="btn btn-default" id="searchBtn">검색</button>
+					<c:if test="${not empty pagination.keyword}">
+						<button class="btn btn-default" id="resetBtn" onclick="location.href='/board/list'">초기화</button>
+					</c:if>
 				</div>
 			</div>
 		</div>

@@ -21,6 +21,7 @@
 						<label><input type="checkbox" value="remember-me">Remember me</label>
 					</div>
 					<button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
+					<button id="returnBtn" class="btn btn-lg btn-default btn-block">돌아가기</button>
 				</form>
 			</div>
 		</div>
@@ -35,6 +36,12 @@
 			if (result != null && result != "") {
 				alert(result);
 			}
+			
+			$("#returnBtn").click(function(e) {
+				e.preventDefault();
+				history.back();
+			});
+			
 		});
 	</script>
 </body>

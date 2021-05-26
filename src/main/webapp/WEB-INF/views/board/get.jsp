@@ -25,7 +25,7 @@
 
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">게시글 조회</h3>
+				<h3>게시글 조회</h3>
 			</div>
 			<div class="panel-body">
 				<div class="form-group">
@@ -37,6 +37,9 @@
 				<div class="form-group">
 					<label>내용</label>
 					<textarea class="form-control" rows="3" name="content" readonly>${board.content}</textarea>
+				</div>
+				<div class="form-group">
+					<label>조회수</label> <input type="text" class="form-control" name="readcnt" value="${board.readcnt}" readonly>
 				</div>
 				<div class="form-group">
 					<label>글쓴이</label> <input type="text" class="form-control" name="userid" value="${board.userid}" readonly>
@@ -53,27 +56,59 @@
 				<button class="btn btn-default" onclick="location.href='/board/list?pageNum=${pagination.pageNum}&amount=${pagination.amount}&type=${pagination.type}&keyword=${pagination.keyword}'">목록</button>
 			</div>
 		</div>
-	
-	</div>
-	
-	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-sm">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">게시글 삭제</h4>
-				</div>
-				<div class="modal-body">삭제하시겠습니까?</div>
-				<div class="modal-footer">
-					<button type="button" id="removeCheckBtn" class="btn btn-danger">삭제</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3>댓글</h3>
+			</div>
+			<div class="panel-body">
+				<table class="table tblReply">
+					<thead>
+						<tr>
+							<th width="15%">작성자</th>
+							<th width="60%">내용</th>
+							<th width="25%">작성일</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>test11</td>
+							<td>TEST!!</td>
+							<td>2021-05-26</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="input-group">
+					<input type="text" class="form-control" id="reply" name="reply">
+					<span class="input-group-btn">
+						<button id="addReplyBtn" class="btn btn-primary">작성</button>
+					</span>
 				</div>
 			</div>
 		</div>
+		
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">게시글 삭제</h4>
+					</div>
+					<div class="modal-body">삭제하시겠습니까?</div>
+					<div class="modal-footer">
+						<button type="button" id="removeCheckBtn" class="btn btn-danger">삭제</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	
 	</div>
+	
+	
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -83,6 +118,23 @@
 			
 			$("#removeCheckBtn").click(function(e) {
 				self.location = "/board/remove?bno=${board.bno}";
+			});
+			
+			$("#addReplyBtn").click(function(e) {
+				var reply = $("#reply");
+				
+				$.ajax({
+					type: "post",
+					url: "/reply/register",
+					data: { reply: reply.val(), replyer: "${userid}", bno: "${board.bno}" },
+					success: function(result) {
+						//성공
+					},
+					error: function(a, b, c) {
+						alert(a, b, c);
+					}
+				});
+				
 			});
 			
 		});

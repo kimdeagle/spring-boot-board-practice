@@ -25,7 +25,7 @@
 
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">게시글 수정</h3>
+				<h3>게시글 수정</h3>
 			</div>
 			<form action="/board/modify" method="post">
 				<div class="panel-body">

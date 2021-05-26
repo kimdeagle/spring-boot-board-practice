@@ -8,5 +8,9 @@ import com.example.board.domain.MemberDTO;
 public interface MemberMapper {
 
 	public int isMember(MemberDTO member);
+
+	public int join(MemberDTO member);
+
+	public int existUserId(String userid);
 	
 }
