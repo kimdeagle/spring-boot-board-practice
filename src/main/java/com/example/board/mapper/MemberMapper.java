@@ -12,5 +12,13 @@ public interface MemberMapper {
 	public int join(MemberDTO member);
 
 	public int existUserId(String userid);
+
+	public MemberDTO get(String userid);
+
+	public int updateUserpw(MemberDTO member);
+
+	public int updateName(MemberDTO member);
+	
+	public int updateEmail(MemberDTO member);
 	
 }

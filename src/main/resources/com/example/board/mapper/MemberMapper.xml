@@ -31,4 +31,41 @@
 		where
 			userid = #{userid}
 	</select>
+	
+	<select id="get" resultType="com.example.board.domain.MemberDTO">
+		select
+			*
+		from
+			tbl_member
+		where
+			userid = #{userid}
+	</select>
+	
+	<update id="updateUserpw">
+		update
+			tbl_member
+		set
+			userpw = #{userpw}
+		where
+			userid = #{userid}
+	</update>
+	
+	<update id="updateName">
+		update
+			tbl_member
+		set
+			name = #{name}
+		where
+			userid = #{userid}
+	</update>
+	
+	<update id="updateEmail">
+		update
+			tbl_member
+		set
+			email = #{email}
+		where
+			userid = #{userid}
+	</update>
+	
 </mapper>

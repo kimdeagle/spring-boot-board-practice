@@ -145,7 +145,7 @@
 					return;
 				}
 				
-				self.location = "/board/list?pageNum=${pagination.pageNum}&amount=${pagination.amount}&type=" + type + "&keyword=" + keyword;
+				self.location = "/board/list?pageNum=1&amount=${pagination.amount}&type=" + type + "&keyword=" + keyword;
 			}
 			
 		});

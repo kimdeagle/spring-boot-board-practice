@@ -4,9 +4,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -72,6 +72,33 @@ public class CommonController {
 	@ResponseBody
 	public boolean checkUserId(String userid) {
 		return memberService.existUserId(userid);
+	}
+	
+	@GetMapping("/mypage")
+	public void mypage(HttpSession session, Model model) {
+		if (session.getAttribute("userid") != null) {
+			model.addAttribute("member", memberService.get(session.getAttribute("userid").toString()));			
+		} else {
+			model.addAttribute("result", "로그인 후 이용하시기 바랍니다.");
+		}
+	}
+	
+	@PostMapping("/modifyUserpw")
+	@ResponseBody
+	public String modifyUserpw(MemberDTO member) {
+		return memberService.updateUserpw(member) == 1 ? "변경 성공" : "변경 실패";
+	}
+	
+	@PostMapping("/modifyName")
+	@ResponseBody
+	public String modifyName(MemberDTO member) {
+		return memberService.updateName(member) == 1 ? "변경 성공" : "변경 실패";
+	}
+	
+	@PostMapping("/modifyEmail")
+	@ResponseBody
+	public String modifyEmail(MemberDTO member) {
+		return memberService.updateEmail(member) == 1 ? "변경 성공" : "변경 실패";
 	}
 	
 }

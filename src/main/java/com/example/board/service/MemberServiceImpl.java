@@ -27,4 +27,25 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.existUserId(userid) == 1;
 	}
 	
+	@Override
+	public MemberDTO get(String userid) {
+		return memberMapper.get(userid);
+	}
+	
+	@Override
+	public int updateUserpw(MemberDTO member) {
+		return memberMapper.updateUserpw(member);
+		
+	}
+	
+	@Override
+	public int updateName(MemberDTO member) {
+		return memberMapper.updateName(member);
+	}
+	
+	@Override
+	public int updateEmail(MemberDTO member) {
+		return memberMapper.updateEmail(member);
+	}
+	
 }

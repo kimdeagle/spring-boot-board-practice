@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.board.mapper.ReplyMapper">
+	<select id="getList" resultType="com.example.board.domain.ReplyDTO">
+		select
+			*
+		from
+			tbl_reply
+		where
+			bno = #{bno}
+		order by
+			rno desc
+	</select>
+	
+	<insert id="register">
+		insert into tbl_reply
+			(reply, replyer, bno)
+		values
+			(#{reply}, #{replyer}, #{bno})
+	</insert>
+	
+	<delete id="remove">
+		delete from tbl_reply
+		where rno = #{rno}
+	</delete>
+	
+	<update id="modify">
+		update
+			tbl_reply
+		set
+			reply = #{reply}
+		where
+			rno = #{rno}
+	</update>
+</mapper>
