@@ -67,4 +67,40 @@
 			
 	</select>
 	
+	<update id="increaseReplyCnt">
+		update
+			tbl_board
+		set
+			replycnt = replycnt + 1
+		where
+			bno = #{bno}
+	</update>
+	
+	<update id="increaseReadCnt">
+		update
+			tbl_board
+		set
+			readcnt = readcnt + 1
+		where
+			bno = #{bno}
+	</update>
+	
+	<update id="decreaseReplyCnt">
+		update
+			tbl_board
+		set
+			replycnt = replycnt - 1
+		where
+			bno = #{bno}
+	</update>
+	
+	<select id="getReplyCnt" resultType="int">
+		select
+			replycnt
+		from
+			tbl_board
+		where
+			bno = #{bno}
+	</select>
+	
 </mapper>

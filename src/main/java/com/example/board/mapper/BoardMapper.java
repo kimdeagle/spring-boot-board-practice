@@ -12,14 +12,22 @@ public interface BoardMapper {
 
 	public List<BoardDTO> getList(Pagination p);
 
-	public BoardDTO get(String bno);
+	public BoardDTO get(Long bno);
 	
 	public int register(BoardDTO board);
 
 	public int modify(BoardDTO board);
 
-	public int remove(String bno);
+	public int remove(Long bno);
 	
 	public int getTotalBoardCnt(Pagination p);
+
+	public int increaseReplyCnt(Long bno);
+
+	public void increaseReadCnt(Long bno);
+
+	public void decreaseReplyCnt(Long bno);
+
+	public int getReplyCnt(Long bno);
 	
 }

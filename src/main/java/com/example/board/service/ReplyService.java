@@ -10,7 +10,7 @@ public interface ReplyService {
 
 	public int register(ReplyDTO reply);
 
-	public int remove(Long rno);
+	public int remove(Long bno, Long rno);
 
 	public int modify(ReplyDTO reply);
 

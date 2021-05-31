@@ -22,7 +22,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public BoardDTO get(String bno) {
+	public BoardDTO get(Long bno) {
 		return boardMapper.get(bno);
 	}
 	
@@ -37,7 +37,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public int remove(String bno) {
+	public int remove(Long bno) {
 		return boardMapper.remove(bno);
 	}
 	
@@ -52,6 +52,16 @@ public class BoardServiceImpl implements BoardService {
 		p.setPagination(p.getPageNum(), p.getAmount());
 		
 		return p;
+	}
+	
+	@Override
+	public void increaseReadCnt(Long bno) {
+		boardMapper.increaseReadCnt(bno);		
+	}
+	
+	@Override
+	public int getReplyCnt(Long bno) {
+		return boardMapper.getReplyCnt(bno);
 	}
 	
 }

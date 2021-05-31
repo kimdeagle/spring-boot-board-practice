@@ -35,8 +35,8 @@ public class ReplyController {
 	}
 	
 	@DeleteMapping("/{rno}")
-	public String remove(@PathVariable Long rno) {
-		return replyService.remove(rno) == 1 ? "삭제 성공" : "삭제 실패";
+	public String remove(@PathVariable Long rno, Long bno) {
+		return replyService.remove(bno, rno) == 1 ? "삭제 성공" : "삭제 실패";
 	}
 	
 	@PatchMapping("/{rno}")

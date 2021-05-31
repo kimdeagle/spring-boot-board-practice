@@ -30,11 +30,11 @@
 			<form action="/board/register" method="post">
 				<div class="panel-body">
 					<div class="form-group">
-						<label>제목</label> <input type="text" class="form-control" name="title">
+						<label>제목 <small>(최대 50자 입력 가능)</small></label> <input type="text" class="form-control" id="title" name="title" maxlength="50">
 					</div>
 					<div class="form-group">
 						<label>내용</label>
-						<textarea class="form-control" rows="3" name="content"></textarea>
+						<textarea class="form-control" rows="3" id="content" name="content"></textarea>
 					</div>
 				</div>
 				<div class="panel-footer text-right">
@@ -50,6 +50,9 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
+			
+			$("#title").focus();
+			
 			$("#listBtn").click(function(e) {
 				e.preventDefault();
 				

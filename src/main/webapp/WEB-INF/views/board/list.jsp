@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean id="today" class="java.util.Date" />
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -22,7 +23,6 @@
 	<%@ include file="../inc/header.jsp"%>
 	
 	<div class="container">
-
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3>게시판 목록
@@ -44,14 +44,24 @@
 							<th>제목</th>
 							<th>작성일</th>
 							<th>조회수</th>						
-							<th>글쓴이</th>
+							<th>작성자</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach items="${list}" var="board">
 						<tr>
+							<fmt:parseNumber var="nowHour" value="${today.time / 1000 / 60 / 60}" integerOnly="true"></fmt:parseNumber>
+							<fmt:parseNumber var="regdateHour" value="${board.regdate.time / 1000 / 60 / 60}" integerOnly="true"></fmt:parseNumber>
 							<td width="15%">${board.bno}</td>
-							<td width="30%"><a href="/board/get?bno=${board.bno}&pageNum=${pagination.pageNum}&amount=${pagination.amount}&type=${pagination.type}&keyword=${pagination.keyword}">${board.title}</a></td>
+							<td width="30%">
+								<a href="/board/get?bno=${board.bno}&pageNum=${pagination.pageNum}&amount=${pagination.amount}&type=${pagination.type}&keyword=${pagination.keyword}">${board.title}</a>
+								<c:if test="${board.replycnt != 0}">
+									<span class="badge">${board.replycnt}</span>
+								</c:if>
+								<c:if test="${nowHour - regdateHour < 24}">
+									<span class="label label-danger">new</span>
+								</c:if>
+							</td>
 							<td width="25%"><fmt:formatDate pattern="yyyy/MM/dd" value="${board.regdate}"/></td>
 							<td width="15%">${board.readcnt}</td>
 							<td width="15%">${board.userid}</td>
@@ -119,6 +129,7 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
+			
 			var result = "${result}";
 	
 			if (result != null && result != "") {

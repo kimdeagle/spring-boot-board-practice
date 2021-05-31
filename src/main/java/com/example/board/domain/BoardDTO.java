@@ -16,4 +16,6 @@ public class BoardDTO {
 	private Date updatedate;
 	private String userid;
 	
+	private int replycnt;
+	
 }

@@ -30,11 +30,11 @@
 			<form action="/board/modify" method="post">
 				<div class="panel-body">
 					<div class="form-group">
-						<label>제목</label> <input type="text" class="form-control" name="title" value="${board.title}">
+						<label>제목</label> <input type="text" class="form-control" id="title" name="title" value="${board.title}">
 					</div>
 					<div class="form-group">
 						<label>내용</label>
-						<textarea class="form-control" rows="3" name="content">${board.content}</textarea>
+						<textarea class="form-control" rows="3" id="content" name="content">${board.content}</textarea>
 					</div>
 					
 					<input type="hidden" name="bno" value="${board.bno}">
@@ -43,7 +43,7 @@
 					<c:if test="${board.userid == userid}">
 						<button type="submit" class="btn btn-success">수정</button>					
 					</c:if>
-					<button id="listBtn" class="btn btn-default">목록</button>
+					<button id="cancelBtn" class="btn btn-default">취소</button>
 				</div>
 				
 				<input type="hidden" name="pageNum" value="${pagination.pageNum}">
@@ -57,10 +57,12 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#listBtn").click(function(e) {
+			$("#title").focus();
+			
+			$("#cancelBtn").click(function(e) {
 				e.preventDefault();
 				
-				self.location = "/board/list?pageNum=${pagination.pageNum}&amount=${pagination.amount}&type=${pagination.type}&keyword=${pagination.keyword}";
+				history.back();
 			});
 		});
 	</script>
