@@ -1,10 +1,10 @@
 package com.example.board.aop;
 
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,16 +12,20 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class Logging {
-
-	@Before("execution(* com.example.board.service.BoardServiceImpl.*(..))")
-	public void beforeLog(JoinPoint joinPoint) {
-		log.info("=====before log start=====");
-		
-	}
 	
-	@After("execution(* com.example.board.service.BoardServiceImpl.*(..))")
-	public void afterLog(JoinPoint joinPoint) {
-		log.info("=====after log start=====");
+	@Around("execution(* com.example.board.service.BoardServiceImpl.*(..))")
+	public Object aroundLog(ProceedingJoinPoint pjp) throws Throwable {
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+		
+		Object proceed = pjp.proceed();
+		
+		stopWatch.stop();
+		
+		log.info(stopWatch.getTotalTimeMillis() + "ms");
+		
+		return proceed;
+		
 	}
 	
 }
