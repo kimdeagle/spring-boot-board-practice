@@ -32,7 +32,9 @@
 				<c:if test="${empty pagination.keyword}">
 					<small>(총 게시글 : ${pagination.totalBoardCnt}건)</small>					
 				</c:if>
+				<c:if test="${not empty userid}">
 					<button class="btn btn-primary pull-right" onclick="location.href='/board/register'">작성</button>
+				</c:if>
 				</h3>
 				<div class="clearfix"></div>
 			</div>
